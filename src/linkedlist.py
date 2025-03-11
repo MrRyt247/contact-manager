@@ -26,7 +26,7 @@ class ContactList:
         self,
         name: str,
         phone: str,
-        other_phone: str,
+        other_phone: str = None,
         email: str = "",
         image_path: str = None,
     ) -> None:
@@ -92,6 +92,25 @@ class ContactList:
             new_name, new_phone, new_other_phone, new_email, new_image_path
         )
         return True
+
+    def _get_contact(self, name, phone, email=None):
+        if not self.head:
+            return False
+
+        # If head is the contact
+        if self.head.name == name and (
+            self.head.phone == phone or self.head.email == email
+        ):
+            return self.head
+
+        # Search for the contact
+        current = self.head
+        while current.next and (
+            current.next.name == name
+            and (current.next.phone == phone or current.next.email == email)
+        ):
+            current = current.next
+        return current
 
     def search_contacts(self, search_key: str) -> list:
         result = []
